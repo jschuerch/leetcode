@@ -16,6 +16,35 @@ class ListNode(object):
         return " -> ".join(map(str, result))
     
 class Solution(object):
+    def addTwoNumbersRecursive(self, l1, l2):
+        """
+        :type l1: Optional[ListNode]
+        :type l2: Optional[ListNode]
+        :rtype: Optional[ListNode]
+        """
+        return self._add(l1, l2, 0)
+
+    def _add(self, l1, l2, carry):
+        """
+        :type l1: Optional[ListNode]
+        :type l2: Optional[ListNode]
+        :type carry: Int
+        """
+        if not l1 and not l2 and not carry:
+            return None
+
+        val1 = l1.val if l1 else 0
+        val2 = l2.val if l2 else 0
+        carry, digit = divmod(carry + val1 + val2, 10)
+        
+        result = ListNode(digit)
+        result.next = self._add(
+                    l1.next if l1 else None, 
+                    l2.next if l2 else None, 
+                    carry)
+
+        return result
+            
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: Optional[ListNode]
@@ -42,9 +71,9 @@ class Solution(object):
 
 def main():
     # Create first number: 2 -> 4 -> 9 (represents 942)
-    l2 = ListNode(2, ListNode(4, ListNode(9)))
+    l1 = ListNode(2, ListNode(4, ListNode(9)))
     # Create second number: 5 -> 6 -> 4 -> 9 (represents 9465)
-    l1 = ListNode(5, ListNode(6, ListNode(4, ListNode(9))))
+    l2 = ListNode(5, ListNode(6, ListNode(4, ListNode(9))))
     sol = Solution()
     result = sol.addTwoNumbers(l1, l2)
     # Print result as a list
