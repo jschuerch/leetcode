@@ -1,7 +1,0 @@
-{
-    "python.testing.pytestArgs": [
-        "002_add_two_numbers"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
-}
