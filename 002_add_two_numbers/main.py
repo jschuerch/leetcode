@@ -16,7 +16,6 @@ class ListNode(object):
         return " -> ".join(map(str, result))
     
 class Solution(object):
-    # 8ms | Beats 55.33%
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: Optional[ListNode]
@@ -24,37 +23,20 @@ class Solution(object):
         :rtype: Optional[ListNode]
         """
         result = ListNode()
-        resnext = result
-        l1cur = l1
-        l2cur = l2
-        carryover = 0
-        while True:
-            # non empty, so always has something in it
-            x = carryover + l1cur.val + l2cur.val
-            if x > 9:
-                carryover = 1
-                x -= 10
-            else:
-                carryover = 0
-            resnext.val = x
-            resnext.next = ListNode()
-            if l1cur.next is None and l2cur.next is None:
-                if carryover:
-                    resnext.next.val = carryover
-                else:
-                    resnext.next = None
-                break
-            resnext = resnext.next
-            if l1cur.next is not None:
-                l1cur = l1cur.next
-            else: 
-                l1cur = ListNode(0)
-            if l2cur.next is not None:
-                l2cur = l2cur.next
-            else: 
-                l2cur = ListNode(0)
+        current = result
+        carry = 0
+        while l1 or l2 or carry:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            
+            carry, digit = divmod(carry + val1 + val2, 10)
+            current.next = ListNode(digit)
+            current = current.next
+
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
                 
-        return result
+        return result.next
 
 
 
