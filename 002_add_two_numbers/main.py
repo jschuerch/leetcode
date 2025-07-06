@@ -2,6 +2,9 @@
 # This code defines a ListNode class for singly-linked lists and a Solution class with a method to add two numbers represented by linked lists.
 
 # Definition for singly-linked list.
+from typing import Optional
+
+
 class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
@@ -16,7 +19,7 @@ class ListNode(object):
         return " -> ".join(map(str, result))
     
 class Solution(object):
-    def addTwoNumbersRecursive(self, l1, l2):
+    def addTwoNumbersRecursive(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         """
         :type l1: Optional[ListNode]
         :type l2: Optional[ListNode]
@@ -24,7 +27,7 @@ class Solution(object):
         """
         return self._add(l1, l2, 0)
 
-    def _add(self, l1, l2, carry):
+    def _add(self, l1: Optional[ListNode], l2: Optional[ListNode], carry: int) -> Optional[ListNode]:
         """
         :type l1: Optional[ListNode]
         :type l2: Optional[ListNode]
@@ -45,7 +48,7 @@ class Solution(object):
 
         return result
             
-    def addTwoNumbers(self, l1, l2):
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         """
         :type l1: Optional[ListNode]
         :type l2: Optional[ListNode]
