@@ -7,16 +7,13 @@ class Solution:
         result = []
         intervals.sort()
         i = 1
-        current = intervals[0]
-        while i < len(intervals):
-            if current[1] >= intervals[i][0]:
-                current[1] = max(current[1], intervals[i][1])
-                i += 1
+        for interval in intervals:
+            if len(result) == 0 or result[-1][1] < interval[0]:
+                result.append(interval)
             else:
-                result.append(current)
-                current = intervals[i]
-        result.append(current)
+                result[-1][1] = max(result[-1][1], interval[1])
         return result
+            
             
 
 if __name__ == "__main__": 
