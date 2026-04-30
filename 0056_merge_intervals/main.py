@@ -1,28 +1,23 @@
 from typing import List
 
 class Solution:
+    # time: O(n log n)
+    # space: O(n)
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        if len(intervals) == 1:
-            return intervals
         result = []
         intervals.sort()
-        i = 0
-        j = 1
-        while i < len(intervals)-1 and j < len(intervals):
-            if intervals[i][1] >= intervals[j][0]:
-                if intervals[i][1] < intervals[j][1]:
-                    intervals[i][1] = intervals[j][1]
-                if j == len(intervals)-1:
-                    result.append(intervals[i])
-                j += 1
+        i = 1
+        current = intervals[0]
+        while i < len(intervals):
+            if current[1] >= intervals[i][0]:
+                current[1] = max(current[1], intervals[i][1])
+                i += 1
             else:
-                # interval i is now separate from the intervals j and later
-                result.append(intervals[i])
-                if j == len(intervals)-1:
-                    result.append(intervals[j])
-                i = j
-                j += 1
+                result.append(current)
+                current = intervals[i]
+        result.append(current)
         return result
+            
 
 if __name__ == "__main__": 
     sol = Solution()
