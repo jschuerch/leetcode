@@ -22,14 +22,14 @@ class Solution:
         if k == 0:
             return head
 
-        newhead = head
-        newlast = None
-        for i in range(length - k):
-            newlast = newhead
-            newhead = newhead.next
+        last.next = head # make the list circular
+
+        newlast = head
+        for i in range(length - k - 1):
+            newlast = newlast.next
         
+        newhead = newlast.next
         newlast.next = None
-        last.next = head
         
         return newhead
     
