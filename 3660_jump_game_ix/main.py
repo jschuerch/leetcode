@@ -4,26 +4,31 @@ class Solution:
     def maxValue(self, nums: List[int]) -> List[int]:
         n = len(nums)
         
-        ans = []
-        start = 0
-        end = 0
-        maxval = 0
-        for i in range(n):
-            maxval = max(maxval, nums[i])
-            for j in range(n - 1, i - 1, -1):
-                if nums[j] < nums[i] or j <= end:
-                    end = j
-                    break
-                elif i == j:
-                    end = j
-                    
-            if j == n-1:
-                end = j
+        # calculate premax_i = max(nums_0 ... nums_i)
+        premax = [0] * n
+        premax[0] = nums[0]
+        for i in range(1, n):
+            premax[i] = max(premax[i-1], nums[i])
 
-            if i == end:
-                ans += [maxval] * (end - start + 1)
-                start = i + 1
-        return ans
+        # calculate sufmin_i = min(nums_i ... nums_n)
+        sufmin = [0] * n
+        sufmin[-1] = nums[-1]
+        for i in range(n-2, -1, -1):
+            sufmin[i] = min(nums[i], sufmin[i+1])
+
+        res = [0] * n
+        res[-1] = premax[-1]
+        for i in range(n-2, -1, -1):
+            # if max value on the left (including current) 
+            # is bigger than min value on the right, 
+            # current element stays in same section as the element to its right
+            if premax[i] > sufmin[i+1]:
+                res[i] = res[i+1]
+            # otherwise, new disconnected section starts
+            else:
+                res[i] = premax[i]
+
+        return res
     
 
 if __name__ == "__main__": 
