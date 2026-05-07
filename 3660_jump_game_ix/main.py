@@ -10,11 +10,8 @@ class Solution:
         for i in range(1, n):
             premax[i] = max(premax[i-1], nums[i])
 
-        # calculate sufmin_i = min(nums_i ... nums_n)
-        sufmin = [0] * n
-        sufmin[-1] = nums[-1]
-        for i in range(n-2, -1, -1):
-            sufmin[i] = min(nums[i], sufmin[i+1])
+        # For current i: sufmin = min(nums_i ... nums_n)
+        sufmin = nums[-1]
 
         res = [0] * n
         res[-1] = premax[-1]
@@ -22,14 +19,15 @@ class Solution:
             # if max value on the left (including current) 
             # is bigger than min value on the right, 
             # current element stays in same section as the element to its right
-            if premax[i] > sufmin[i+1]:
+            if premax[i] > sufmin:
                 res[i] = res[i+1]
             # otherwise, new disconnected section starts
             else:
                 res[i] = premax[i]
 
+            sufmin = min(nums[i], sufmin)
+
         return res
-    
 
 if __name__ == "__main__": 
     sol = Solution()
