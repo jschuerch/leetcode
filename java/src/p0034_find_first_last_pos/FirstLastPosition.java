@@ -17,19 +17,15 @@ public class FirstLastPosition {
     private int findBoundary(int[] nums, int target, boolean findFirst) {
         int left = 0;
         int right = nums.length - 1;
+        int result = -1;
         while (left <= right) {
             int middle = left + (right - left) / 2;
 
             if (nums[middle] == target) {
+                result = middle;
                 if (findFirst) {
-                    if (middle == 0 || nums[middle - 1] < target) {
-                        return middle;
-                    }
                     right = middle - 1;
                 } else {
-                    if (middle == nums.length - 1 || nums[middle + 1] > target) {
-                        return middle;
-                    }
                     left = middle + 1;
                 }
             } else if (nums[middle] < target) {
@@ -38,7 +34,7 @@ public class FirstLastPosition {
                 right = middle - 1;
             }
         }
-        return -1;
+        return result;
     }
 
 }
