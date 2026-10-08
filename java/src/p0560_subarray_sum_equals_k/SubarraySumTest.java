@@ -16,49 +16,27 @@ class SubarraySumTest {
         new TestCase(new int[]{1,2,3}, 3, 2),
         new TestCase(new int[]{2,-1,3,0,4,5,6,7}, 4, 4),
         new TestCase(new int[]{2,-1,3,0,4,5,6,7}, 2, 3),
-        new TestCase(new int[]{2,-1,3,0,4,5,6,7}, 18, 2)
+        new TestCase(new int[]{2,-1,3,0,4,5,6,7}, 18, 2),
+        new TestCase(new int[]{2,-1,3,0,4,-4,1,-1}, 4, 7),
+        new TestCase(new int[]{2,-1,3,0,4,-4,1,-1}, 3, 5)
     };
 
     @Test
-    void testCase0() {
+    void testCases() {
         SubarraySum subarraySum = new SubarraySum();
-        TestCase tc = testCases[0];
-        assertEquals(
-                tc.expected(),
-                subarraySum.subarraySum(tc.nums(), tc.k())
-        );
+        for (TestCase tc : testCases) {
+            assertEquals(
+                    tc.expected(),
+                    subarraySum.subarraySum(tc.nums(), tc.k())
+            );
+        }
     }
+
     @Test
-    void testCase1() {
+    void testCase_n() {
+        int i = 5;
         SubarraySum subarraySum = new SubarraySum();
-        TestCase tc = testCases[1];
-        assertEquals(
-                tc.expected(),
-                subarraySum.subarraySum(tc.nums(), tc.k())
-        );
-    }
-    @Test
-    void testCase2() {
-        SubarraySum subarraySum = new SubarraySum();
-        TestCase tc = testCases[2];
-        assertEquals(
-                tc.expected(),
-                subarraySum.subarraySum(tc.nums(), tc.k())
-        );
-    }
-    @Test
-    void testCase3() {
-        SubarraySum subarraySum = new SubarraySum();
-        TestCase tc = testCases[3];
-        assertEquals(
-                tc.expected(),
-                subarraySum.subarraySum(tc.nums(), tc.k())
-        );
-    }
-    @Test
-    void testCase4() {
-        SubarraySum subarraySum = new SubarraySum();
-        TestCase tc = testCases[4];
+        TestCase tc = testCases[i];
         assertEquals(
                 tc.expected(),
                 subarraySum.subarraySum(tc.nums(), tc.k())

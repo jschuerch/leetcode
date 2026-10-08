@@ -1,20 +1,24 @@
 package p0560_subarray_sum_equals_k;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SubarraySum {
 
     public int subarraySum(int[] nums, int k) {
-        int[] res = new int[nums.length];
-        int count = 0;
-        for (int i = 0; i < nums.length; i++) {
+        Map<Integer, Integer> prefixFreq = new HashMap<Integer, Integer>();
+        prefixFreq.put(0, 1);
 
-            for (int j = 0; j <= i; j++) {
-                res[j] += nums[i];
-                if (res[j] == k) {
-                    count++;
-                }
-            }
+        int sum = 0;
+        int count = 0;
+
+        for (int num : nums) {
+            sum += num;
+            count += prefixFreq.getOrDefault(sum - k, 0);
+            prefixFreq.merge(sum, 1, Integer::sum);
         }
+
         return count;
     }
 }
