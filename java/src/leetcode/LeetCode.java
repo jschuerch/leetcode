@@ -249,6 +249,72 @@ public class LeetCode {
         return true;
     }
 
+    //p0238
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] prefixProd = new int[n + 2];
+        int[] suffixProd = new int[n + 2];
+        prefixProd[0] = 1;
+        prefixProd[n + 1] = 1;
+        suffixProd[0] = 1;
+        suffixProd[n + 1] = 1;
+
+        for (int i = 0; i < n; i++) {
+            prefixProd[i+1] = prefixProd[i] * nums[i];
+            suffixProd[n - i] = suffixProd[n + 1 - i] * nums[n - 1 - i];
+        }
+
+        int[] answer = new int[n];
+        for (int i = 0; i < n; i++) {
+            answer[i] = prefixProd[i] * suffixProd[i+2];
+        }
+
+        return answer;
+    }
+
+    public int[] productExceptSelf_LinearSpace(int[] nums) {
+        int n = nums.length;
+        int[] answer = new int[n];
+        answer[0] = 1;
+
+        // Prefix Products
+        for (int i = 1; i < n; i++) {
+            answer[i] = answer[i - 1] * nums[i - 1];
+        }
+
+        // Suffix Products
+        for (int i = n - 2; i > 0; i--) {
+            nums[i] = nums[i] * nums[i + 1];
+        }
+
+        // Combine both
+        for (int i = 0; i < n - 1; i++) {
+            answer[i] = answer[i] * nums[i+1];
+        }
+
+        return answer;
+    }
+
+    public int[] productExceptSelf_LinearSpace2(int[] nums) {
+        int n = nums.length;
+        int[] answer = new int[n];
+        answer[0] = 1;
+
+        // Prefix Products
+        for (int i = 1; i < n; i++) {
+            answer[i] = answer[i - 1] * nums[i - 1];
+        }
+
+        // Calculate Suffix Products and combine with Prefix
+        int suffixProd = 1;
+        for (int i = n - 1; i > 0; i--) {
+            suffixProd *= nums[i];
+            answer[i - 1] *= suffixProd;
+        }
+
+        return answer;
+    }
+
     // p0704
     public int binarySearch(int[] nums, int target) {
         int left = 0;
