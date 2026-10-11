@@ -133,6 +133,25 @@ public class LeetCode {
         }
     }
 
+    // p0058
+    public int[][] mergeIntervals(int[][] intervals) {
+
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        List<int[]> merged = new LinkedList<>();
+        merged.add(intervals[0]);
+
+        for (int i = 1; i < intervals.length - 1; i++) {
+            int[] curr = merged.getLast();
+            if (intervals[i][0] <= curr[1]) {
+                curr[1] = Math.max(curr[1], intervals[i][0]);
+            } else {
+                merged.add(intervals[i]);
+            }
+        }
+
+        return (int[][]) merged.toArray();
+    }
+
     // p0104
     // DFS
     public int maxDepthDFS(TreeNode root) {
