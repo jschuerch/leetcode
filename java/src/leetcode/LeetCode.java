@@ -105,6 +105,52 @@ public class LeetCode {
         return new ArrayList<>(anagrams.values());
     }
 
+    // p0121
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int minPrice = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+            minPrice = Math.min(minPrice, prices[i]);
+        }
+        return maxProfit;
+    }
+
+    // p0122
+    public int maxProfit2(int[] prices) {
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            int profit = prices[i] - prices[i-1];
+            if (profit > 0) {
+                maxProfit += profit;
+            }
+        }
+        return maxProfit;
+    }
+
+    // p0123
+    public int maxProfit3(int[] prices) {
+        int[] maxProfitLeft = new int[prices.length];
+        int[] maxProfitRight = new int[prices.length];
+
+        int minValue = prices[0];
+        int maxValue = prices[prices.length - 1];
+        for (int i = 1; i < prices.length; i++) {
+            maxProfitLeft[i] = Math.max(maxProfitLeft[i-1], prices[i] - minValue);
+            minValue = Math.min(minValue, prices[i]);
+
+            int j = prices.length - i - 1;
+            maxProfitRight[j] = Math.max(maxProfitRight[j+1], maxValue - prices[j]);
+            maxValue = Math.max(maxValue, prices[j]);
+        }
+
+        int maxProfit = maxProfitRight[0];
+        for (int i = 1; i < prices.length; i++) {
+            maxProfit = Math.max(maxProfit, maxProfitLeft[i-1] + maxProfitRight[i]);
+        }
+
+        return maxProfit;
+    }
 
     // p0125
     public boolean isPalindrome(String s) {
