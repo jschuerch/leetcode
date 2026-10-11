@@ -44,12 +44,22 @@ public class LeetCode {
     }
 
     public static class ListNode {
-         int val;
-         ListNode next;
-         ListNode() {}
-         ListNode(int val) { this.val = val; }
-         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
+
     // p0021
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode();
@@ -85,6 +95,7 @@ public class LeetCode {
         return new ArrayList<>(anagrams.values());
         //return new anagrams.values().stream().toList();
     }
+
     public List<List<String>> groupAnagramsNoSort(String[] strs) {
         Map<String, List<String>> anagrams = new HashMap<>();
 
@@ -105,6 +116,58 @@ public class LeetCode {
         return new ArrayList<>(anagrams.values());
     }
 
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {
+        }
+        TreeNode(int val) {
+            this.val = val;
+        }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    // p0104
+    // DFS
+    public int maxDepthDFS(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return 1 + Math.max(maxDepthDFS(root.left), maxDepthDFS(root.right));
+    }
+
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+
+        queue.offer(root);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode curr = queue.poll();
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
+
+
     // p0121
     public int maxProfit(int[] prices) {
         int maxProfit = 0;
@@ -120,7 +183,7 @@ public class LeetCode {
     public int maxProfit2(int[] prices) {
         int maxProfit = 0;
         for (int i = 1; i < prices.length; i++) {
-            int profit = prices[i] - prices[i-1];
+            int profit = prices[i] - prices[i - 1];
             if (profit > 0) {
                 maxProfit += profit;
             }
@@ -134,16 +197,16 @@ public class LeetCode {
         dp[0][0] = -prices[0];
 
         for (int i = 1; i < prices.length; i++) {
-            dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] - prices[i]);
-            dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] + prices[i]);
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
         }
 
-        return dp[prices.length -  1][1];
+        return dp[prices.length - 1][1];
     }
 
     // Less Memory
     public int maxProfit2_DP2(int[] prices) {
-        int profit[] = new int[] {-prices[0], 0};
+        int profit[] = new int[]{-prices[0], 0};
 
         for (int i = 1; i < prices.length; i++) {
             int temp[] = new int[2];
@@ -163,17 +226,17 @@ public class LeetCode {
         int minValue = prices[0];
         int maxValue = prices[prices.length - 1];
         for (int i = 1; i < prices.length; i++) {
-            maxProfitLeft[i] = Math.max(maxProfitLeft[i-1], prices[i] - minValue);
+            maxProfitLeft[i] = Math.max(maxProfitLeft[i - 1], prices[i] - minValue);
             minValue = Math.min(minValue, prices[i]);
 
             int j = prices.length - i - 1;
-            maxProfitRight[j] = Math.max(maxProfitRight[j+1], maxValue - prices[j]);
+            maxProfitRight[j] = Math.max(maxProfitRight[j + 1], maxValue - prices[j]);
             maxValue = Math.max(maxValue, prices[j]);
         }
 
         int maxProfit = maxProfitRight[0];
         for (int i = 1; i < prices.length; i++) {
-            maxProfit = Math.max(maxProfit, maxProfitLeft[i-1] + maxProfitRight[i]);
+            maxProfit = Math.max(maxProfit, maxProfitLeft[i - 1] + maxProfitRight[i]);
         }
 
         return maxProfit;
@@ -275,7 +338,6 @@ public class LeetCode {
     }
 
 
-
     // p0217
     public boolean containsDuplicate(int[] nums) {
         Set<Integer> seen = new HashSet<>();
@@ -290,7 +352,7 @@ public class LeetCode {
 
     // p0242
     public boolean isAnagram(String s, String t) {
-        if (s.length()!=t.length()) {
+        if (s.length() != t.length()) {
             return false;
         }
 
@@ -320,13 +382,13 @@ public class LeetCode {
         suffixProd[n + 1] = 1;
 
         for (int i = 0; i < n; i++) {
-            prefixProd[i+1] = prefixProd[i] * nums[i];
+            prefixProd[i + 1] = prefixProd[i] * nums[i];
             suffixProd[n - i] = suffixProd[n + 1 - i] * nums[n - 1 - i];
         }
 
         int[] answer = new int[n];
         for (int i = 0; i < n; i++) {
-            answer[i] = prefixProd[i] * suffixProd[i+2];
+            answer[i] = prefixProd[i] * suffixProd[i + 2];
         }
 
         return answer;
@@ -349,7 +411,7 @@ public class LeetCode {
 
         // Combine both
         for (int i = 0; i < n - 1; i++) {
-            answer[i] = answer[i] * nums[i+1];
+            answer[i] = answer[i] * nums[i + 1];
         }
 
         return answer;
@@ -374,6 +436,7 @@ public class LeetCode {
 
         return answer;
     }
+    
 
     // p0704
     public int binarySearch(int[] nums, int target) {
