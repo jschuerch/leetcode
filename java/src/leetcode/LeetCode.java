@@ -436,7 +436,70 @@ public class LeetCode {
 
         return answer;
     }
-    
+
+    //p0347
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        List<Integer>[] buckets = new List[nums.length + 1];
+
+        for (int num : nums) {
+            freq.merge(num, 1, Integer::sum);
+        }
+        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+            int num = entry.getKey();
+            int f = entry.getValue();
+            if (buckets[f] == null) {
+                buckets[f] = new ArrayList<>();
+            }
+            buckets[f].add(num);
+        }
+        int[] answer = new int[k];
+        int cnt = 0;
+        int i = nums.length;
+        while (cnt < k) {
+            if (buckets[i] == null) {
+                i--;
+                continue;
+            }
+            for (int num : buckets[i]) {
+                answer[cnt++] = num;
+            }
+            i--;
+        }
+
+        return answer;
+    }
+    public int[] topKFrequent2(int[] nums, int k) {
+        // O(1)
+        if (k == nums.length) {
+            return nums;
+        }
+
+        // O(n)
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) {
+            freq.merge(num, 1, Integer::sum);
+        }
+
+        Queue<Integer> heap = new PriorityQueue<>(
+                (n1, n2) -> freq.get(n1) - freq.get(n2));
+
+        // Keep k top frequent elements in the heap
+        // O(N log k) < O(N log N) time
+        for (int n: freq.keySet()) {
+            heap.add(n);
+            if (heap.size() > k) {
+                heap.poll();
+            }
+        }
+
+        // O(k log k) time
+        int[] top = new int[k];
+        for(int i = k - 1; i >= 0; --i) {
+            top[i] = heap.poll();
+        }
+        return top;
+    }
 
     // p0704
     public int binarySearch(int[] nums, int target) {

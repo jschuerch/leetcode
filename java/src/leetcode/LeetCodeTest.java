@@ -76,4 +76,5 @@ public class LeetCodeTest {
 
         assertNull(current, "List contains more nodes than expected");
     }
+
 }
