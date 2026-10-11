@@ -137,19 +137,19 @@ public class LeetCode {
     public int[][] mergeIntervals(int[][] intervals) {
 
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-        List<int[]> merged = new LinkedList<>();
+        List<int[]> merged = new ArrayList<>();
         merged.add(intervals[0]);
 
-        for (int i = 1; i < intervals.length - 1; i++) {
-            int[] curr = merged.getLast();
+        for (int i = 1; i < intervals.length; i++) {
+            int[] curr = merged.get(merged.size() - 1);
             if (intervals[i][0] <= curr[1]) {
-                curr[1] = Math.max(curr[1], intervals[i][0]);
+                curr[1] = Math.max(curr[1], intervals[i][1]);
             } else {
                 merged.add(intervals[i]);
             }
         }
 
-        return (int[][]) merged.toArray();
+        return merged.toArray(new int[merged.size()][]);
     }
 
     // p0104
