@@ -2,8 +2,7 @@ package leetcode;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LeetCodeTest {
 
@@ -39,5 +38,14 @@ public class LeetCodeTest {
                     solution.isPalindrome(strings[i])
             );
         }
+    }
+
+    @Test
+    void binarySearch() {
+        LeetCode solution = new LeetCode();
+        assertEquals(
+                4,
+                solution.binarySearch(new int[] { -1, 0, 3, 5, 9, 12}, 9)
+        );
     }
 }
