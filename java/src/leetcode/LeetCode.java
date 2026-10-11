@@ -43,7 +43,7 @@ public class LeetCode {
         return true;
     }
 
-    public class ListNode {
+    public static class ListNode {
          int val;
          ListNode next;
          ListNode() {}
@@ -215,6 +215,66 @@ public class LeetCode {
         }
         return true;
     }
+
+    // p0206
+    public ListNode reverseList(ListNode head) {
+        return reverseRecursive(head, null);
+    }
+
+    private ListNode reverseRecursive(ListNode node, ListNode reversedHead) {
+        if (node == null) {
+            return reversedHead;
+        }
+
+        ListNode tail = node.next;
+        node.next = reversedHead;
+        return reverseRecursive(tail, node);
+    }
+
+
+    public ListNode reverseList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode reversedHead = reverseList2(head.next); // reversedHead holds reference to reversed sublist...
+        // not i need to reverse head and head.next
+        head.next.next = head; // create closed loop
+        head.next = null; // break loop, not instead of head -> head.next it is head.next -> head
+        // and reversedHead holds the reference to "head.next", which is why we return reversedHead
+        return reversedHead;
+    }
+
+    public ListNode reverseList3(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        ListNode newHead = new ListNode();
+
+        while (curr != null) {
+            prev = curr;
+            curr = curr.next;
+
+            ListNode temp = newHead.next;
+            newHead.next = prev;
+            prev.next = temp;
+        }
+
+        return newHead.next;
+    }
+
+    public ListNode reverseList4(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev;
+    }
+
+
 
     // p0217
     public boolean containsDuplicate(int[] nums) {
