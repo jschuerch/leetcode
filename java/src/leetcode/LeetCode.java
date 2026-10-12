@@ -152,6 +152,32 @@ public class LeetCode {
         return merged.toArray(new int[merged.size()][]);
     }
 
+    //p0102
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> out = new ArrayList<>();
+        if (root == null) {
+            return out;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+
+        while(! queue.isEmpty()) {
+            List<Integer> level = new ArrayList<>();
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode t = queue.poll();
+                level.add(t.val);
+                if (t.left != null)
+                    queue.offer(t.left);
+                if (t.right != null)
+                    queue.offer(t.right);
+            }
+            out.add(level);
+        }
+
+        return out;
+    }
+
     // p0104
     // DFS
     public int maxDepthDFS(TreeNode root) {
